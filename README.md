@@ -106,6 +106,10 @@ scaffolding-mc-server-{port: uint16}。
 
 各联机客户端应根据硬件信息生成足够长的字符串，避免碰撞，并尽力保证对同一设备始终产出稳定的结果。
 
+##### scaffolding_version
+
+Scaffolding协议的版本号
+
 #### 通用协议
 
 ##### c:ping
@@ -141,14 +145,14 @@ scaffolding-mc-server-{port: uint16}。
 ##### c:player_ping [心跳/5秒]
 
 - 请求体：玩家 ID 和设备 machine_id
-- 请求体格式（JSON）：{ name: string, machine_id: string, vendor: string }
+- 请求体格式（JSON）：{ name: string, machine_id: string, vendor: string, scaffolding_version: string}
 - 响应体：空
 
 ##### c:player_profiles_list
 
 - 请求体：空
 - 响应体：玩家列表（包括房主）
-- 响应体格式（JSON）：[{ name: string, machine_id: string, vendor: string, kind: 'HOST' | 'GUEST' }]
+- 响应体格式（JSON）：[{ name: string, machine_id: string, vendor: string, scaffolding_version: string, kind: 'HOST' | 'GUEST' }]
 
 #### 拓展协议
 
@@ -162,4 +166,5 @@ scaffolding-mc-server-{port: uint16}。
 4. 在联机信息获取协议上发送 `c:protocols`，获取联机中心支持的协议，并与当前联机客户端支持的协议取交集，确定本次联机可用的全部协议（如果客户端仅支持标准协议，可以不执行联机协议协商）；
 5. 在联机信息获取协议上发送 `c:server_port`，获取Minecraft服务器地址；
 6. 每隔 5s 发送一次 `c:player_ping` 心跳包。
+
 
