@@ -140,15 +140,25 @@ scaffolding-mc-server-{port: uint16}。
 
 ##### c:player_ping [心跳/5秒]
 
-- 请求体：玩家 ID 和设备 machine_id
-- 请求体格式（JSON）：{ name: string, machine_id: string, vendor: string }
+- 请求体：玩家 ID、设备 machine_id 和 EasyTier Node ID
+- 请求体格式（JSON）：
+- * 联机客户端执行了协议协商且双端支持 NN:player_easytier_id 协议：{ name: string, machine_id: string, easytier_id: string, vendor: string }
+  * 否则：{ name: string, machine_id: string, vendor: string }
 - 响应体：空
+
+> 联机中心应使用 machine_id 来作为所有节点的唯一标识符。
+
+##### NN:player_easytier_id [协议协商标识]
 
 ##### c:player_profiles_list
 
 - 请求体：空
 - 响应体：玩家列表（包括房主）
-- 响应体格式（JSON）：[{ name: string, machine_id: string, vendor: string, kind: 'HOST' | 'GUEST' }]
+- 响应体格式（JSON）：
+- * 联机客户端执行了协议协商且双端支持 NN:player_easytier_id 协议：\[{ name: string, machine_id: string, vendor: string, kind: 'HOST' | 'GUEST' }\]
+  * 否则：\[{ name: string, machine_id: string, easytier_id: string, vendor: string, kind: 'HOST' | 'GUEST' }\]
+
+> 联机中心应使用 machine_id 来作为所有节点的唯一标识符。
 
 #### 拓展协议
 
@@ -159,7 +169,9 @@ scaffolding-mc-server-{port: uint16}。
 1. 联机客户端加入对应 EasyTier 网络；
 2. 联机客户端根据联机中心发现协议，确定联机信息获取协议的 TCP 服务器；
 3. 立刻发送 `c:player_ping` 心跳包（在协议协商之前）；
-4. 在联机信息获取协议上发送 `c:protocols`，获取联机中心支持的协议，并与当前联机客户端支持的协议取交集，确定本次联机可用的全部协议（如果客户端仅支持标准协议，可以不执行联机协议协商）；
+4. 在联机信息获取协议上发送 `c:protocols`，获取联机中心支持的协议，并与当前联机客户端支持的协议取交集，确定本次联机可用的全部协议（如果客户端仅支持基础协议，可以不执行联机协议协商）；
 5. 在联机信息获取协议上发送 `c:server_port`，获取Minecraft服务器地址；
 6. 每隔 5s 发送一次 `c:player_ping` 心跳包。
+
+**基础协议** 包括：`c:ping`, `c:protocols`,` c:server_port`, `c:player_ping`, `c:player_profiles_list`。
 
