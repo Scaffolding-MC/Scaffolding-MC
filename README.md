@@ -142,7 +142,7 @@ scaffolding-mc-server-{port: uint16}。
 
 - 请求体：玩家 ID、设备 machine_id 和 EasyTier Node ID
 - 请求体格式（JSON）：
-- * 联机客户端执行了协议协商且双端支持 NN:player_easytier_id 协议：{ name: string, machine_id: string, easytier_id: string, vendor: string }
+- * 联机客户端执行了协议协商且双端支持 `NN:player_easytier_id` 协议：{ name: string, machine_id: string, easytier_id: string, vendor: string }
   * 否则：{ name: string, machine_id: string, vendor: string }
 - 响应体：空
 
@@ -155,7 +155,7 @@ scaffolding-mc-server-{port: uint16}。
 - 请求体：空
 - 响应体：玩家列表（包括房主）
 - 响应体格式（JSON）：
-- * 联机客户端执行了协议协商且双端支持 NN:player_easytier_id 协议：\[{ name: string, machine_id: string, vendor: string, kind: 'HOST' | 'GUEST' }\]
+- * 联机客户端执行了协议协商且双端支持 `NN:player_easytier_id` 协议：\[{ name: string, machine_id: string, vendor: string, kind: 'HOST' | 'GUEST' }\]
   * 否则：\[{ name: string, machine_id: string, easytier_id: string, vendor: string, kind: 'HOST' | 'GUEST' }\]
 
 > 联机中心应使用 machine_id 来作为所有节点的唯一标识符。
@@ -174,4 +174,5 @@ scaffolding-mc-server-{port: uint16}。
 6. 每隔 5s 发送一次 `c:player_ping` 心跳包。
 
 **基础协议** 包括：`c:ping`, `c:protocols`,` c:server_port`, `c:player_ping`, `c:player_profiles_list`。
+
 
