@@ -174,7 +174,3 @@ scaffolding-mc-server-{port: uint16}。
 6. 每隔 5s 发送一次 `c:player_ping` 心跳包。
 
 **基础协议** 包括：`c:ping`, `c:protocols`,` c:server_port`, `c:player_ping`, `c:player_profiles_list`。
-
-
-
-
