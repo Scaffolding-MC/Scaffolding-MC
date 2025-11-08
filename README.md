@@ -172,6 +172,7 @@ scaffolding-mc-server-{port: uint16}。
 // 若非在线已有整合包
 {
     "status": true,
+    "type": "custom",
     "minecraft": "1.21.10",
     "additions": [
         {
@@ -186,12 +187,17 @@ scaffolding-mc-server-{port: uint16}。
     "resources": [
         {
             "path": "mods/example-mod.jar",
-            "url": "https://example.com/download/example-mod.jar",
+            "urls": [
+                "https://example.com/download/example-mod.jar",
+                "https://mirror.example.com/download/example-mod.jar"
+            ],
             "size": 123456
         },
         {
             "path": "resourcepacks/example-resourcepack.zip",
-            "url": "https://example.com/download/example-resourcepack.zip",
+            "urls": [
+                "https://example.com/download/example-resourcepack.zip"
+            ],
             "size": 123456
         }
     ]
@@ -221,5 +227,6 @@ scaffolding-mc-server-{port: uint16}。
 6. 每隔 5s 发送一次 `c:player_ping` 心跳包。
 
 **基础协议** 包括：`c:ping`, `c:protocols`,` c:server_port`, `c:player_ping`, `c:player_profiles_list`。
+
 
 
