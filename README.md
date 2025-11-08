@@ -162,6 +162,59 @@ scaffolding-mc-server-{port: uint16}。
 
 #### 拓展协议
 
+##### NN:host_instance_info
+
+- 请求体：空
+- 响应体：若房主开启了实例分享，则返回实例 Metadata；否则，返回 { status: false }
+- 响应体格式（JSON）：
+
+```
+// 若非在线已有整合包
+{
+    "status": true,
+    "type": "custom",
+    "minecraft": "1.21.10",
+    "additions": [
+        {
+            "name": "fabric",
+            "version": "0.17.3"
+        },
+        {
+            "name": "optifine",
+            "version": "HD_U_J7_pre2"
+        }
+    ],
+    "resources": [
+        {
+            "path": "mods/example-mod.jar",
+            "urls": [
+                "https://example.com/download/example-mod.jar",
+                "https://mirror.example.com/download/example-mod.jar"
+            ],
+            "size": 123456
+        },
+        {
+            "path": "resourcepacks/example-resourcepack.zip",
+            "urls": [
+                "https://example.com/download/example-resourcepack.zip"
+            ],
+            "size": 123456
+        }
+    ]
+}
+```
+
+```
+// 若为在线已有整合包
+{
+    "status": true,
+    "type": "modpack",
+    "source": "modrinth",
+    "projectId": "5ZwdcRci",
+    "fileId": "mmM8JfKR"
+}
+```
+
 各联机客户端可以自行实现协议，选用自己的命名空间。
 请尽量选用联机客户端的名称作为命名空间，以避免命名空间冲突！
 标准联机流程
@@ -174,3 +227,6 @@ scaffolding-mc-server-{port: uint16}。
 6. 每隔 5s 发送一次 `c:player_ping` 心跳包。
 
 **基础协议** 包括：`c:ping`, `c:protocols`,` c:server_port`, `c:player_ping`, `c:player_profiles_list`。
+
+
+
